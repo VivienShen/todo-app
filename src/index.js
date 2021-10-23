@@ -1,13 +1,16 @@
+//Serves as a big picture, can wrap around the context
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { TodosContextProvider } from './context/todos-context';
 
+//anything inside todoscontextprovider is props children
 ReactDOM.render(
-  <React.StrictMode>
+  <TodosContextProvider>
     <App />
-  </React.StrictMode>,
+  </TodosContextProvider>,
   document.getElementById('root')
 );
 

@@ -1,19 +1,29 @@
 import "./styles.css"
 import { Todo } from "../../todo/index";
-
+import { useContext, useEffect, useState } from "react";
+import { TodosContext } from "../../../context/todos-context";
 
 
 export const AllTodosPage = () => {
-    const todos = [
-        {text: "Walk my dog", date: "10/10/2021", color:"blue", isComplete: false },
-        {text: "Do laundry", date: "10/10/2021", color:"red", isComplete: false },
-        {text: "Take test", date: "10/10/2021", color:"red", isComplete: false }
-    ];
+    
+    const [todoElements, setTodoElements] = useState([]);
+
+    const todosContext = useContext(TodosContext);
+
+    //gets fired whenever the state updates, but normal variable changes are not counted
+    useEffect ( () => {
+        const todoElems = todosContext.todos.map( (todo) => {
+            return (
+                <Todo key={todo.id} text={todo.title} date={todo.date}
+                isComplete={todo.isComplete} todoId={todo.id}></Todo>
+            )
+        })
+        setTodoElements(todoElems);
+    }, [todosContext.todos])
 
     return (
         <div className="todos-container">
-            { todos.map ((todo) => <Todo text={todo.text} 
-            date={todo.date} color={todo.color} isComplete={todo.isComplete} /> )}
+            {todoElements}
         </div>
     )
 }
